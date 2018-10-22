@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resultado>
+<result>
+<local>
+<id>1</id>
+<emplazamiento>Alcudia</emplazamiento>
+<codPortal>454664</codPortal>
+<codVia>4545454</codVia>
+<numVia>Yea boi</numVia>
+<referenciaCatastral>43534543FFF</referenciaCatastral>
+<referenciaMunicipal>435643521345F</referenciaMunicipal>
+<poligono>1</poligono>
+<zonaSaturada>Zona Saturadisima</zonaSaturada>
+<comments>este local es peligroiso</comments>
+<licencias>
+<licencia>
+<id>
+<iae>
+<expediente>JERK THAT MEAT</expediente>
+<anyo>2030</anyo>
+</iae>
+</id>
+<tipo>
+<tipo>
+<id>34</id>
+<title>LICENCIA DOS </title>
+<creationDate>Mon Oct 22 19:39:57 CEST 2018</creationDate>
+</tipo>
+</tipo>
+</licencia>
+</licencias>
+</local>
+<local>
+<id>2</id>
+<emplazamiento>Canals</emplazamiento>
+<codPortal>454664</codPortal>
+<codVia>4545454</codVia>
+<numVia>Yea boi</numVia>
+<referenciaCatastral>43534543FFF</referenciaCatastral>
+<referenciaMunicipal>435643521345F</referenciaMunicipal>
+<poligono>2</poligono>
+<zonaSaturada>Zona Saturadisima</zonaSaturada>
+<comments>este local es peligroiso</comments>
+<licencias>
+<licencia>
+<id>
+<iae>
+<expediente>JERK THAT MEAT</expediente>
+<anyo>2030</anyo>
+</iae>
+</id>
+<tipo>
+<tipo>
+<id>34</id>
+<title>LICENCIA DOS </title>
+<creationDate>Mon Oct 22 19:39:57 CEST 2018</creationDate>
+</tipo>
+</tipo>
+</licencia>
+</licencias>
+</local>
+<local>
+<id>3</id>
+<emplazamiento>Xativa</emplazamiento>
+<codPortal>454664</codPortal>
+<codVia>4545454</codVia>
+<numVia>Yea boi</numVia>
+<referenciaCatastral>43534543FFF</referenciaCatastral>
+<referenciaMunicipal>435643521345F</referenciaMunicipal>
+<poligono>3</poligono>
+<zonaSaturada>Zona Saturadisima</zonaSaturada>
+<comments>este local es peligroiso</comments>
+<licencias>
+<licencia>
+<id>
+<iae>
+<expediente>JERK THAT MEAT</expediente>
+<anyo>2030</anyo>
+</iae>
+</id>
+<tipo>
+<tipo>
+<id>34</id>
+<title>LICENCIA DOS </title>
+<creationDate>Mon Oct 22 19:39:57 CEST 2018</creationDate>
+</tipo>
+</tipo>
+</licencia>
+</licencias>
+</local>
+</result>
+</resultado>
