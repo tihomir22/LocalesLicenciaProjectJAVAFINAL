@@ -5,17 +5,33 @@
  */
 package controlador;
 
+import java.io.File;
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.soap.Node;
+import javax.xml.transform.TransformerException;
 import modelo.Resultado;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  *
  * @author sportak
  */
 public class ControlResultado extends ControlDom {
+    
+    public Document recuperar(File xmlFile) throws ParserConfigurationException, SAXException, IOException {
+        Document doc = null;
+        doc = deXMLaDOC(xmlFile);
+        return doc;
+    }
+
+    public void almacenar(Document doc, File archivoDestino) throws TransformerException {
+        deDOCaXML(doc, archivoDestino);
+    }
+    
     
     public Resultado leerResult(Document doc) {
         ControlLocal cl = new ControlLocal();
@@ -27,7 +43,7 @@ public class ControlResultado extends ControlDom {
         for (int i = 0; i < listaLocales.getLength(); i++) {
             if (listaLocales.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 System.out.println("Voy a tramitar " + listaLocales.item(i).getNodeName() + " " + listaLocales.item(i).getChildNodes().getLength());
-                res.add(cl.leerResult((Element) listaLocales.item(i)));
+                res.add(cl.leerLocal((Element) listaLocales.item(i)));
             }
         }
         return res;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package localeslicenciaproject;
+package vista;
 
 import controlador.ControlDom;
 import controlador.ControlResultado;
@@ -50,7 +50,7 @@ public class LocalesLicenciaProject {
                     if (ruta.length() == 0) {
                         ruta = "registro-licencia.xml";
                     }
-                    doc = cd.deXMLaDOC(new File(ruta));
+                    doc=cr.recuperar(new File(ruta));
                     break;
 
                 case 2:
@@ -59,7 +59,6 @@ public class LocalesLicenciaProject {
 
                 case 3:
                     res.impresionTOTAL();
-
                     break;
 
                 case 4:

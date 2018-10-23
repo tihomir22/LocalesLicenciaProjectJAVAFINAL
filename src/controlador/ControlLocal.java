@@ -21,7 +21,7 @@ import org.w3c.dom.NodeList;
  */
 public class ControlLocal extends ControlDom {
 
-    public Local leerResult(Element elementoLocal) {
+    public Local leerLocal(Element elementoLocal) {
         Local local1 = new Local();
 
         local1.setId(Integer.parseInt(getValorEtiqueta(Constantes.ET_ID, elementoLocal).trim()));
