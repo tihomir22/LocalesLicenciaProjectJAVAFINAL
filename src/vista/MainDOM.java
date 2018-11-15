@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
  *
  * @author sportak
  */
-public class LocalesLicenciaProject {
+public class MainDOM {
 
     /**
      * @param args the command line arguments

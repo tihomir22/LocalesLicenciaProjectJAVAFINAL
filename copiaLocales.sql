@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Licencia` (
-  `id` int(10) NOT NULL,
+  `id` int(10) NOT NULL PRIMARY KEY,
   `Titulo` varchar(255) NOT NULL,
   `FechaCreacion` varchar(255) NOT NULL,
   `Expediente` varchar(255) NOT NULL,
@@ -51,7 +51,7 @@ INSERT INTO `Licencia` (`id`, `Titulo`, `FechaCreacion`, `Expediente`, `ANYO`) V
 --
 
 CREATE TABLE `Local` (
-  `ID` int(10) NOT NULL,
+  `ID` int(10) NOT NULL PRIMARY KEY,
   `Emplazamiento` varchar(255) NOT NULL,
   `CodigoPortal` varchar(255) NOT NULL,
   `CodigoVia` varchar(255) NOT NULL,
