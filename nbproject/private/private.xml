@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/mati/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/modelo/Local.java</file>
-            <file>file:/home/mati/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/controlador/ControlLocal.java</file>
-            <file>file:/home/mati/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/modelo/Resultado.java</file>
-            <file>file:/home/mati/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/vista/LocalesLicenciaProject.java</file>
-            <file>file:/home/mati/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/controlador/ControlDom.java</file>
-            <file>file:/home/mati/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/modelo/Licencia.java</file>
-            <file>file:/home/mati/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/controlador/ControlResultado.java</file>
+            <file>file:/C:/Users/sportak/Documents/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/controlador/DAO/LocalDAO.java</file>
+            <file>file:/C:/Users/sportak/Documents/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/controlador/ControlLocal.java</file>
+            <file>file:/C:/Users/sportak/Documents/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/controlador/DAO/LicenciaDAO.java</file>
+            <file>file:/C:/Users/sportak/Documents/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/vista/MainDB.java</file>
+            <file>file:/C:/Users/sportak/Documents/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/controlador/ControlDom.java</file>
+            <file>file:/C:/Users/sportak/Documents/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/controlador/ControlResultado.java</file>
+            <file>file:/C:/Users/sportak/Documents/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/controlador/DAO/Conexion_DB.java</file>
+            <file>file:/C:/Users/sportak/Documents/NetBeansProjects/LocalesLicenciaProjectJAVAFINAL/src/vista/MainDOM.java</file>
         </group>
     </open-files>
 </project-private>

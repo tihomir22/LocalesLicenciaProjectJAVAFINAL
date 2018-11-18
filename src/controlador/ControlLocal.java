@@ -43,12 +43,14 @@ public class ControlLocal extends ControlDom {
     }
 
     public ArrayList<Licencia> leerLicencia(Element elementoLocal, Local local) {
-        Licencia licencia = new Licencia();
+        Licencia licencia = null;
         Element elementoLicencias = getElementEtiqueta(Constantes.ET_LICENCIAS, elementoLocal);
         NodeList licencias = elementoLicencias.getChildNodes();
         ArrayList<Licencia> listaLicencias = new ArrayList<>();
+
         for (int i = 0; i < licencias.getLength(); i++) {
             if (licencias.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                licencia = new Licencia();
                 Element Elelicencia = (Element) licencias.item(i);
 
                 Element id = getElementEtiqueta(Constantes.ET_ID, Elelicencia);
@@ -65,6 +67,7 @@ public class ControlLocal extends ControlDom {
                 listaLicencias.add(licencia);
             }
         }
+       // System.out.println(listaLicencias.toString() + "\n PARA " + local.toString());
         return listaLicencias;
     }
 
