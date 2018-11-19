@@ -22,6 +22,8 @@ import modelo.Resultado;
  */
 public class LocalDAO {
 
+    LicenciaDAO licenciadao = new LicenciaDAO();
+
     public void actualiza(Connection con, Local local) {
         PreparedStatement statement = null;
         try {
@@ -38,6 +40,25 @@ public class LocalDAO {
             statement.setString(10, local.getComentarios());
 
             statement.setInt(11, local.getId());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(LocalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(LocalDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void delete(Connection con, int id) {
+        PreparedStatement statement = null;
+        try {
+            statement = con.prepareStatement("DELETE FROM local WHERE ID=?");
+            statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(LocalDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,9 +110,9 @@ public class LocalDAO {
         }
     }
 
-    public Resultado recuperar(Connection con) {
+    public Resultado recuperarResultado(Connection con) {
         PreparedStatement statement = null;
-        LicenciaDAO licenciadao = new LicenciaDAO();
+
         Resultado res = new Resultado();
         try {
             statement = con.prepareStatement("SELECT * FROM local");
@@ -126,6 +147,41 @@ public class LocalDAO {
             }
         }
         return res;
+    }
+
+    public Local recuperarById(Connection con, int id) {
+        PreparedStatement statement = null;
+        Local local = null;
+        try {
+            statement = con.prepareStatement("SELECT * FROM local WHERE ID=?");
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                System.out.println("Recibiendo datos");
+                String emplazamiento = rs.getString("Emplazamiento");
+                int codigoPortal = rs.getInt("CodigoPortal");
+                int codigoVia = rs.getInt("CodigoVia");
+                String numVia = rs.getString("NumeroVia");
+                String referenciaCatastral = rs.getString("RefCatas");
+                String referenciaMunicipal = rs.getString("RefMuni");
+                int poligono = rs.getInt("Poligono");
+                String zonaSaturada = rs.getString("ZonaSaturada");
+                String comentarios = rs.getString("Comentarios");
+                local = new Local(id, emplazamiento, codigoPortal, codigoVia, numVia, referenciaCatastral, referenciaMunicipal, poligono, zonaSaturada, comentarios);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LocalDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(LocalDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return local;
     }
 
 }
