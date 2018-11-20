@@ -10,9 +10,11 @@ package modelo;
  * @author sportak
  */
 public class Licencia {
+
     private String expediente;
     private String anyo;
     private int id;
+    private int idLocal;
     private String titulo;
     private String fechaCreacion;
 
@@ -23,7 +25,9 @@ public class Licencia {
         this.titulo = titulo;
         this.fechaCreacion = fechaCreacion;
     }
-   public Licencia(){}
+
+    public Licencia() {
+    }
 
     public String getExpediente() {
         return expediente;
@@ -65,11 +69,17 @@ public class Licencia {
         this.fechaCreacion = fechaCreacion;
     }
 
+    public int getIdLocal() {
+        return idLocal;
+    }
+
+    public void setIdLocal(int idLocal) {
+        this.idLocal = idLocal;
+    }
+
     @Override
     public String toString() {
         return "Licencia{" + "expediente=" + expediente + ", anyo=" + anyo + ", id=" + id + ", titulo=" + titulo + ", fechaCreacion=" + fechaCreacion + '}';
     }
-    
-    
-    
+
 }

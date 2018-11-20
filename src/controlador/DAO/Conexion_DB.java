@@ -33,7 +33,7 @@ public class Conexion_DB {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String urlDb = "jdbc:mysql://localhost:3306/locales";
+            String urlDb = "jdbc:mysql://localhost:3306/localesV2";
             con = (java.sql.DriverManager.getConnection(urlDb, "root", ""));
 
         } catch (ClassNotFoundException ex) {
@@ -46,28 +46,17 @@ public class Conexion_DB {
 
     }
 
-    public void cargarXMLaBD(String nombreFichero) throws ParserConfigurationException, SAXException, IOException {
-        File archi = new File(nombreFichero);
-        ControlDom dom = new ControlDom();
-        ControlResultado cr = new ControlResultado();
-        ControlLocal cl = new ControlLocal();
+    public void cargarXMLaBD(Resultado res) throws ParserConfigurationException, SAXException, IOException {
+
         LocalDAO localdao = new LocalDAO();
         LicenciaDAO licenciadao = new LicenciaDAO();
 
-        if (archi.exists()) {
-            Document doc = dom.deXMLaDOC(archi);
-            Resultado res = cr.leerResult(doc);
-            res.impresionTOTAL();
+        for (int i = 0; i < res.size(); i++) {
+            Local local = res.get(i);
+            localdao.insertar(con, local);
+            licenciadao.insertByLocal(con, local);
 
-            for (int i = 0; i < res.size(); i++) {
-                Local local = res.get(i);
-                localdao.insertar(con, local);
-                licenciadao.insertar(con, local);
-            }
-        } else {
-            System.out.println("El fichero no existe por lo que no se puede continuar...");
         }
-
     }
 
     public void CerrarConsulta(Connection con) {

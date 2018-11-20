@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Licencia;
 import modelo.Local;
 import modelo.Resultado;
 
@@ -93,6 +94,7 @@ public class LocalDAO {
             }
 
             statement.executeUpdate();
+
         } catch (SQLException ex) {
             if (ex.getErrorCode() == 1062) {
                 System.out.println("LOCAL No se inserta nuevo ya que el id " + local.getId() + " esta duplicado");
@@ -182,6 +184,43 @@ public class LocalDAO {
             }
         }
         return local;
+    }
+
+    public ArrayList<Local> recuperarTodos(Connection con) {
+        PreparedStatement statement = null;
+        ArrayList<Local> listalocales = new ArrayList<>();
+        Local loc = null;
+        try {
+            statement = con.prepareStatement("SELECT * FROM local");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                System.out.println("Recibiendo datos");
+                int idloc = rs.getInt("ID");
+                String Emplazamiento = rs.getString("Emplazamiento");
+                int codPortal = rs.getInt("CodigoPortal");
+                int codVia = rs.getInt("CodigoVia");
+                String numVia = rs.getString("NumeroVia");
+                String refCatas = rs.getString("RefCatas");
+                String refMuni = rs.getString("RefMuni");
+                int poligono = rs.getInt("Poligono");
+                String zonaSatur = rs.getString("ZonaSaturada");
+                String comentarios = rs.getString("Comentarios");
+                loc = new Local(idloc, Emplazamiento, codPortal, codVia, numVia, refCatas, refMuni, poligono, zonaSatur, comentarios);
+                listalocales.add(loc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LocalDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(LocalDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return listalocales;
     }
 
 }

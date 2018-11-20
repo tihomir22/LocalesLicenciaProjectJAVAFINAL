@@ -8,10 +8,12 @@ package vista;
 import controlador.ControlDom;
 import controlador.ControlResultado;
 import controlador.DAO.Conexion_DB;
+import controlador.DAO.LicenciaDAO;
 import controlador.DAO.LocalDAO;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,11 +32,16 @@ import org.xml.sax.SAXException;
 public class MainDB {
 
     public static void main(String[] args) {
-        int opcion = 999, id;
-        String eleccion;
+        int opcion = 999, id, localID = 0;
+        String eleccion, titulo, fechaCreacion, anyo, expediente;
         Local recuperado;
+        Licencia licRecuperada;
         Scanner teclado = new Scanner(System.in);
         LocalDAO local = new LocalDAO();
+        LicenciaDAO licenciadao = new LicenciaDAO();
+        ArrayList<Licencia> listaLicencia = new ArrayList<>();
+        ArrayList<Local> listalocales = new ArrayList<>();
+
         ControlDom dom = new ControlDom();
         Document doc = null;
         ControlResultado cres = new ControlResultado();
@@ -43,13 +50,17 @@ public class MainDB {
         System.out.println("Abrir conexion");
         Connection con = conexiondb.abrirConexion();
         System.out.println("Conexion abierta");
+
         while (opcion != 0) {
             mostrarMenu();
             opcion = teclado.nextInt();
             switch (opcion) {
-                case 1:
+                case 1: {
                     try {
-                        conexiondb.cargarXMLaBD("registro-licencia.xml");
+                        doc = dom.deXMLaDOC(new File("registro-licencia.xml"));
+                        res = cres.leerResult(doc);
+                        res.impresionTOTAL();
+                        System.out.println("\n Realizado con exito");
                     } catch (ParserConfigurationException ex) {
                         Logger.getLogger(MainDB.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (SAXException ex) {
@@ -57,12 +68,30 @@ public class MainDB {
                     } catch (IOException ex) {
                         Logger.getLogger(MainDB.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    break;
+                }
+
+                break;
                 case 2:
+                    if (res != null) {
+                        try {
+                            conexiondb.cargarXMLaBD(res);
+                        } catch (ParserConfigurationException ex) {
+                            Logger.getLogger(MainDB.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (SAXException ex) {
+                            Logger.getLogger(MainDB.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainDB.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        System.out.println("Debes cargar el xml a objeto antes de hacer este paso!!");
+                    }
+
+                    break;
+                case 3:
                     res = local.recuperarResultado(con);
                     break;
 
-                case 3:
+                case 4:
                     if (res != null) {
                         try {
                             doc = dom.deXMLaDOC();
@@ -78,8 +107,8 @@ public class MainDB {
 
                     break;
 
-                case 4:
-                    mostrarOpciones();
+                case 5:
+                    mostrarOpciones("Local");
                     opcion = teclado.nextInt();
                     switch (opcion) {
                         case 1:
@@ -185,7 +214,103 @@ public class MainDB {
                                 System.out.println("No se ha encontrado...");
                             }
                             break;
+                        case 5:
+                            listalocales = local.recuperarTodos(con);
+                            System.out.println(listalocales);
+                            break;
+                    }
+                    break;
+                case 6:
+                    mostrarOpciones("Licencia");
+                    opcion = teclado.nextInt();
+                    switch (opcion) {
+                        case 1:
+                            System.out.println("Introduzca los siguientes campos [ idLicencia(int) Titulo(String) FechaCreacion(String) \n Expediente(String) Anyo(String) LocalID(int) si tiene]");
+                            id = teclado.nextInt();
+                            teclado.nextLine();
+                            titulo = teclado.nextLine();
+                            fechaCreacion = teclado.nextLine();
+                            expediente = teclado.nextLine();
+                            anyo = teclado.nextLine();
+                            localID = teclado.nextInt();
+                            teclado.nextLine();
+                            Licencia lic = new Licencia(expediente, anyo, id, titulo, fechaCreacion);
+                            licenciadao.insert(con, lic, localID);
+                            break;
 
+                        case 2:
+                            teclado.nextLine();
+                            System.out.println("Introduce el numero de expediente de la licencia a modificar"); // se realiza una busqueda en la BBDD y si se encuentra se recupera
+                            expediente = teclado.nextLine();
+                            licRecuperada = licenciadao.recuperarByExpediente(con, expediente);
+                            if (licRecuperada != null) {
+                                System.out.println("Se ha recuperado \n" + licRecuperada.toString());
+                                System.out.println("Que deseas modificar ? [ Anyo , idLicencia ( no es la clave primaria) , titulo , fechaCreacion , idLocal (el local al que pertenece) ]");
+                                eleccion = teclado.nextLine();
+                                switch (eleccion) {
+                                    case "Anyo":
+                                        System.out.println("Introduce nuevo " + eleccion);
+                                        licRecuperada.setAnyo(teclado.nextLine());
+                                        break;
+                                    case "idLicencia":
+                                        System.out.println("Introduce nuevo " + eleccion);
+                                        licRecuperada.setId(teclado.nextInt());
+                                        teclado.nextLine();
+                                        break;
+                                    case "titulo":
+                                        System.out.println("Introduce nuevo " + eleccion);
+                                        licRecuperada.setTitulo(teclado.nextLine());
+                                        break;
+                                    case "fechaCreacion":
+                                        System.out.println("Introduce nuevo " + eleccion);
+                                        licRecuperada.setFechaCreacion(teclado.nextLine());
+                                        break;
+                                    case "idLocal":
+                                        System.out.println("Introduce nuevo " + eleccion);
+                                        licRecuperada.setIdLocal(teclado.nextInt());
+                                        teclado.nextLine();
+                                        break;
+
+                                    default:
+                                        System.out.println("Introduciste un valor incorrecto vuelva a intentarlo");
+                                        break;
+                                }
+                                licenciadao.actualiza(con, licRecuperada);
+                                System.out.println("Actualizado con exito");
+                            } else {
+                                System.out.println("No fue encontrado...");
+                            }
+                            break;
+
+                        case 3:
+                            teclado.nextLine();
+                            System.out.println("Introduce el numero de expediente de la licencia a recuperar"); // se realiza una busqueda en la BBDD y si se encuentra se recupera
+                            expediente = teclado.nextLine();
+                            licRecuperada = licenciadao.recuperarByExpediente(con, expediente);
+                            if (licRecuperada != null) {
+                                System.out.println("Se ha recuperado " + licRecuperada.toString());
+                            } else {
+                                System.out.println("No se ha encontrado...");
+                            }
+                            break;
+
+                        case 4:
+                            teclado.nextLine();
+                            System.out.println("Introduce el numero de expediente de la licencia a eliminar"); // se realiza una busqueda en la BBDD y si se encuentra se recupera
+                            expediente = teclado.nextLine();
+                            licRecuperada = licenciadao.recuperarByExpediente(con, expediente);
+                            if (licRecuperada != null) {
+                                System.out.println("Se ha borrado con exito " + licRecuperada.toString());
+                                licenciadao.delete(con, licRecuperada.getExpediente());
+                            } else {
+                                System.out.println("No se ha encontrado...");
+                            }
+                            break;
+
+                        case 5:
+                            listaLicencia = licenciadao.recuperarTodos(con);
+                            System.out.println(listaLicencia);
+                            break;
                     }
                     break;
             }
@@ -197,16 +322,19 @@ public class MainDB {
     }
 
     public static void mostrarMenu() {
-        System.out.println("1.- Cargar XML a BBDD , si ya fue cargada no se volveran a insertar datos");
-        System.out.println("2.- Descargar de BBDD a objetos Resultado conteniendo todos los datos de la BBDD");
-        System.out.println("3.- Guardar el objeto  Resultado como XML");
-        System.out.println("4.-Opciones de Locales [ INSERTAR MODIFICAR RECUPERAR ELIMINAR ]");
+        System.out.println("1.-Cargar XML a Objetos");
+        System.out.println("2.-Cargar Objetos a BBDD , si ya fue cargada no se volveran a insertar datos");
+        System.out.println("3.-Descargar la BBDD a objetos Resultado que contienen todos los datos de la BBDD");
+        System.out.println("4.-Guardar el objeto Resultado como XML");
+        System.out.println("5.-Opciones de Locales [ INSERTAR MODIFICAR RECUPERAR RECUPERAR ALL ELIMINAR ]");
+        System.out.println("6.-Opciones de Licencia [ INSERTAR MODIFICAR RECUPERAR RECUPERAR ALL ELIMINAR ]");
     }
 
-    public static void mostrarOpciones() {
-        System.out.println("1.- Insertar un Local en la BBDD");
-        System.out.println("2.- Modificar un Local en la BBDD");
-        System.out.println("3.- Recuperar un Local de la BBDD");
-        System.out.println("4.- Eliminar un Local de la BBDD");
+    public static void mostrarOpciones(String about) {
+        System.out.println("1.- Insertar un " + about + " en la BBDD");
+        System.out.println("2.- Modificar un " + about + " en la BBDD");
+        System.out.println("3.- Recuperar un " + about + " de la BBDD");
+        System.out.println("4.- Eliminar un " + about + " de la BBDD");
+        System.out.println("5.- Recuperar todos los  " + about + " de la BBDD");
     }
 }
