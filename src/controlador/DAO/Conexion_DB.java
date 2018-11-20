@@ -33,7 +33,7 @@ public class Conexion_DB {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String urlDb = "jdbc:mysql://localhost:3306/localesV2";
+            String urlDb = "jdbc:mysql://localhost:3306/locales";
             con = (java.sql.DriverManager.getConnection(urlDb, "root", ""));
 
         } catch (ClassNotFoundException ex) {
@@ -50,7 +50,6 @@ public class Conexion_DB {
 
         LocalDAO localdao = new LocalDAO();
         LicenciaDAO licenciadao = new LicenciaDAO();
-
         for (int i = 0; i < res.size(); i++) {
             Local local = res.get(i);
             localdao.insertar(con, local);
